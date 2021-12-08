@@ -5,12 +5,12 @@ pipeline {
 		maven "Maven"
 	}
 	stages {
-		stage('Deploy to Nexus'){
-			steps{
-                sh "mvn -X clean deploy"
-                sh 'curl -L -X GET "http://192.168.10.135:8081/service/rest/v1/search/assets/download?sort=version&repository=simpleapp-snapshot&maven.groupId=org.springframework.samples&maven.artifactId=spring-petclinic&maven.extension=jar" -H "accept: application/json" --output /var/lib/jenkins/workspace/simple-app/petclinic.jar'		
-			}
-		}
+// 		stage('Deploy to Nexus'){
+// 			steps{
+//                 sh "mvn -X clean deploy"
+//                 sh 'curl -L -X GET "http://192.168.10.135:8081/service/rest/v1/search/assets/download?sort=version&repository=simpleapp-snapshot&maven.groupId=org.springframework.samples&maven.artifactId=spring-petclinic&maven.extension=jar" -H "accept: application/json" --output /var/lib/jenkins/workspace/simple-app/petclinic.jar'		
+// 			}
+// 		}
 		stage('build docker image'){
 			steps{
 				sh 'docker build /var/lib/jenkins/workspace/simple-app/ -t 192.168.10.135:8085/petclinic-image:1.0'
