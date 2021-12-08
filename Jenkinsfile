@@ -4,9 +4,6 @@ pipeline {
 	tools {
 		maven "Maven"
 	}
-	parameters {
-		[$class: 'DateParameterDefinition', name: 'somedate', dateFormat: 'yyyyMMdd', defaultValue: 'LocalDate.now()']
-	}
 	stages {
 // 		stage('Deploy to Nexus'){
 // 			steps{
@@ -16,7 +13,8 @@ pipeline {
 // 		}
 		stage('build docker image'){
 			steps{
-				echo "${params.somedate}"
+				def now = new Date()
+                                echo now.format('yyyyMMddHHmm')
     //                             sh 'docker login -u admin -p 123 192.168.10.135:8085'
 				// sh 'docker build /var/lib/jenkins/workspace/simple-app/ -t 192.168.10.135:8085/petclinic-image:1.0'
 				// sh 'docker push 192.168.10.135:8085/petclinic-image:1.0'
