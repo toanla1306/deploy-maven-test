@@ -21,7 +21,7 @@ pipeline {
 		stage('build docker image'){
 			steps{
                                 echo "${params.TIME}"
-                                sh "export tag_image=${params.TIME}-${env.BUILD_ID}"
+                                sh "export tag_image=now-${env.BUILD_ID}"
                                 sh 'echo "$(tag_image)"'
                                 echo "build id: ${env.BUILD_ID}, build number: ${env.BUILD_NUMBER}"
     //                             sh 'docker login -u admin -p 123 192.168.10.135:8085'
