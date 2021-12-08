@@ -8,9 +8,6 @@ pipeline {
 	tools {
 		maven "Maven"
 	}
-        parameters {
-                string(name: 'TIME', defaultValue: now, description:'')
-        }
 	stages {
 // 		stage('Deploy to Nexus'){
 // 			steps{
@@ -20,9 +17,9 @@ pipeline {
 // 		}
 		stage('build docker image'){
 			steps{
-                                echo "${params.TIME}"
                                 sh "export tag_image='${now}-${env.BUILD_ID}'"
-                                sh 'echo ${tag_image}'
+//                                 sh 'echo ${tag_image}'
+                                echo "${now}-${env.BUILD_ID"
                                 echo "build id: ${env.BUILD_ID}, build number: ${env.BUILD_NUMBER}"
     //                             sh 'docker login -u admin -p 123 192.168.10.135:8085'
 				// sh 'docker build /var/lib/jenkins/workspace/simple-app/ -t 192.168.10.135:8085/petclinic-image:1.0'
