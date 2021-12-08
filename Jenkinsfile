@@ -20,7 +20,7 @@ pipeline {
 // 		}
 		stage('build docker image'){
 			steps{
-                                echo ${params.TIME}
+                                echo '${params.TIME}'
                                 sh 'export tag_image=${params.TIME}-${env.BUILD_ID}'
                                 echo tag_image
                                 echo "build id: ${env.BUILD_ID}, build number: ${env.BUILD_NUMBER}"
