@@ -18,6 +18,7 @@ pipeline {
 		stage('build docker image'){
 			steps{
                                 echo now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                                echo "build id: ${env.BUILD_ID}, build number: ${env.BUILD_NUMBER}"
     //                             sh 'docker login -u admin -p 123 192.168.10.135:8085'
 				// sh 'docker build /var/lib/jenkins/workspace/simple-app/ -t 192.168.10.135:8085/petclinic-image:1.0'
 				// sh 'docker push 192.168.10.135:8085/petclinic-image:1.0'
