@@ -29,7 +29,7 @@ pipeline {
                                 //echo "${now}.${env.BUILD_ID}"
                                 //echo "build id: ${env.BUILD_ID}, build number: ${env.BUILD_NUMBER}"
 //                              sh 'export -n test=$(unzip -p /var/lib/jenkins/workspace/simple-app/petclinic.jar | head | grep Implementation-Version | cut -d ":" -f2)'
-                                echo "${now}-${env.VERSION_APP}-${env.BUILD_ID_IN_DAY.toInteger() + 1}"
+                                echo "${now}-${params.VERSION_APP}-${params.BUILD_ID_IN_DAY.toInteger() + 1}"
 //                                 sh 'docker login -u admin -p 123 192.168.10.135:8085'
 // 				sh "docker build /var/lib/jenkins/workspace/simple-app/ -t 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
 // 				sh "docker push 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
