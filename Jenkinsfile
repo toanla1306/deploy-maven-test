@@ -8,6 +8,8 @@ pipeline {
 	tools {
 		maven "Maven"
 	}
+        environment {
+                VERSION_APP= sh(script: 'unzip -p /var/lib/jenkins/workspace/simple-app/petclinic.jar | head | grep Implementation-Version | cut -d ":" -f2)', ,returnStdout: true).trim()
 	stages {
 // 		stage('Deploy to Nexus'){
 // 			steps{
@@ -19,8 +21,8 @@ pipeline {
 			steps{
                                 echo "${now}.${env.BUILD_ID}"
                                 echo "build id: ${env.BUILD_ID}, build number: ${env.BUILD_NUMBER}"
-                                sh 'export -n test=$(unzip -p /var/lib/jenkins/workspace/simple-app/petclinic.jar | head | grep Implementation-Version | cut -d ":" -f2)'
-                                sh 'echo "${test}"'
+//                              sh 'export -n test=$(unzip -p /var/lib/jenkins/workspace/simple-app/petclinic.jar | head | grep Implementation-Version | cut -d ":" -f2)'
+                                echo "${params.VERSION_APP}"
 //                                 sh 'docker login -u admin -p 123 192.168.10.135:8085'
 // 				sh "docker build /var/lib/jenkins/workspace/simple-app/ -t 192.168.10.135:8085/petclinic-image:${now}.${env.BUILD_ID}"
 // 				sh "docker push 192.168.10.135:8085/petclinic-image:${now}.${env.BUILD_ID}"
