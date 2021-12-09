@@ -1,7 +1,7 @@
 import java.time.*
 import java.time.format.DateTimeFormatter
 
-def now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+def now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
 
 pipeline {
 	agent any
@@ -11,6 +11,7 @@ pipeline {
         environment {
 //                 VERSION_APP= sh(script: 'unzip -p /var/lib/jenkins/workspace/simple-app/petclinic.jar | head | grep Implementation-Version | cut -d ":" -f2',returnStdout: true).trim()
                 VERSION_APP= sh(script: 'head -20 /var/lib/jenkins/workspace/simple-app/pom.xml | grep "<version>" | tail -1 | cut -d ">" -f2 | cut -d "<" -f1',returnStdout: true).trim()
+                BUILD_ID_IN_DAY= sh(script: "curl http://192.168.10.135:8081/service/rest/repository/browse/simpleapp-snapshot/org/springframework/samples/spring-petclinic/2.5.0-SNAPSHOT/ | grep 2.5.0-${now} | wc -l",returnStdout: true).trim()
         }
 	stages {
 // 		stage('Deploy to Nexus'){
@@ -24,7 +25,7 @@ pipeline {
                                 echo "${now}.${env.BUILD_ID}"
                                 echo "build id: ${env.BUILD_ID}, build number: ${env.BUILD_NUMBER}"
 //                              sh 'export -n test=$(unzip -p /var/lib/jenkins/workspace/simple-app/petclinic.jar | head | grep Implementation-Version | cut -d ":" -f2)'
-                                echo "${VERSION_APP}"
+                                echo "${VERSION_APP}.${BUILD_ID_IN_DAY}"
 //                                 sh 'docker login -u admin -p 123 192.168.10.135:8085'
 // 				sh "docker build /var/lib/jenkins/workspace/simple-app/ -t 192.168.10.135:8085/petclinic-image:${now}.${env.BUILD_ID}"
 // 				sh "docker push 192.168.10.135:8085/petclinic-image:${now}.${env.BUILD_ID}"
