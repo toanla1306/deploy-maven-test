@@ -10,6 +10,7 @@ pipeline {
 	}
         environment {
                 VERSION_APP= sh(script: 'unzip -p /var/lib/jenkins/workspace/simple-app/petclinic.jar | head | grep Implementation-Version | cut -d ":" -f2)', ,returnStdout: true).trim()
+        }
 	stages {
 // 		stage('Deploy to Nexus'){
 // 			steps{
