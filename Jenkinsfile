@@ -9,7 +9,8 @@ pipeline {
 		maven "Maven"
 	}
         environment {
-                VERSION_APP= sh(script: 'unzip -p /var/lib/jenkins/workspace/simple-app/petclinic.jar | head | grep Implementation-Version | cut -d ":" -f2',returnStdout: true).trim()
+//                 VERSION_APP= sh(script: 'unzip -p /var/lib/jenkins/workspace/simple-app/petclinic.jar | head | grep Implementation-Version | cut -d ":" -f2',returnStdout: true).trim()
+                VERSION_APP= sh(script: 'head -20 /var/lib/jenkins/workspace/simple-app/pom.xml | grep "<version>" | tail -1 | cut -d ">" -f2 | cut -d "<" -f1',returnStdout: true).trim()
         }
 	stages {
 // 		stage('Deploy to Nexus'){
