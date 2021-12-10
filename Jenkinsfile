@@ -46,7 +46,7 @@ pipeline {
 //                                         sh "docker pull 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
 //                                         sh "docker run --name check-health-${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1} -d -p 8085:8080 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
                                         def status_health_check= sh(script: 'curl -I 192.168.10.140:8085 | grep HTTP | cut -d " " -f2', returnStdout: true).trim()
-                                        if("${status_health_check}" == "200" {
+                                        if("${status_health_check}" == "200"){
                                                 echo "Deploy Sucess"
                                         }else{
                                                 error "Deploy Failed"
