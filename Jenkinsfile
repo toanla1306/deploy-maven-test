@@ -43,9 +43,9 @@ pipeline {
                                         withCredentials([usernamePassword(credentialsId:'dockerlogin', passwordVariable: 'password', usernameVariable: 'username')]) {
                                                 sh "docker login -u $username -p $password 192.168.10.135:8085"
                                         }
-//                                         sh "docker pull 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
-                                        echo "${VERSION_APP}"
-				        echo "${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
+                                        sh "docker pull 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
+                                        sh "docker run --name check-health-${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1} -d -p 8085:8080 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
+                                        
                                 }
 			}
 		}
