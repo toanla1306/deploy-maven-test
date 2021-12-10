@@ -38,7 +38,7 @@ pipeline {
 			}
 			steps{
                                 script{
-                                        def VERSION_APP= sh(script: "head -20 ${env.WORKSPACE}/workspace/simple-app/pom.xml | grep '<version>' | tail -1 | cut -d '>' -f2 | cut -d '<' -f1",returnStdout: true).trim()
+                                        def VERSION_APP= sh(script: 'head -20 /home/toan/agent_release/workspace/simple-app/pom.xml | grep "<version>" | tail -1 | cut -d ">" -f2 | cut -d "<" -f1',returnStdout: true).trim()
                                         def BUILD_ID_IN_DAY= sh(script: "curl http://192.168.10.135:8081/service/rest/repository/browse/simpleapp-snapshot/org/springframework/samples/spring-petclinic/2.5.0-SNAPSHOT/ | grep 2.5.0-${now} | wc -l",returnStdout: true).trim()
                                         withCredentials([usernamePassword(credentialsId:'dockerlogin', passwordVariable: 'password', usernameVariable: 'username')]) {
                                                 sh "docker login -u $username -p $password 192.168.10.135:8085"
