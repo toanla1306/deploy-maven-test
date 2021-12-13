@@ -30,7 +30,7 @@ pipeline {
 			steps{
                                 script {
                                         VERSION_APP= groovy_file.getVersionApp()
-//                                         BUILD_ID_IN_DAY= groovy_file.getVersionBuildinDay()
+                                        BUILD_ID_IN_DAY= groovy_file.getVersionBuildinDay()
 //                                         groovy_file.loginDockerwithNexus()
 //                                         sh 'docker login -u admin -p 123 192.168.10.135:8085'
 // 				        sh "docker build /var/lib/jenkins/workspace/simple-app/ -t 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
@@ -38,25 +38,25 @@ pipeline {
                                 }        
 			}
 		}
-		stage('check health release'){
-			agent {
-				label 'releasevm'
-			}
-			steps{
-                                script{
-                                        VERSION_APP= groovy_file.getVersionApp()
-                                        BUILD_ID_IN_DAY= groovy_file.getVersionBuildinDay()
-                                        groovy_file.loginDockerwithNexus()
-                                        sh "docker pull 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
-                                        sh "docker run --name check-health-${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1} -d -p 8085:8080 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
-                                        status_health_check= groovy_file.checkHealthDeploy()
-                                        if("${status_health_check}" == "200"){
-                                                echo "Deploy Sucess"
-                                        }else{
-                                                error "Deploy Failed"
-                                        }
-                                }
-			}
-		}
+// 		stage('check health release'){
+// 			agent {
+// 				label 'releasevm'
+// 			}
+// 			steps{
+//                                 script{
+//                                         VERSION_APP= groovy_file.getVersionApp()
+//                                         BUILD_ID_IN_DAY= groovy_file.getVersionBuildinDay()
+//                                         groovy_file.loginDockerwithNexus()
+//                                         sh "docker pull 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
+//                                         sh "docker run --name check-health-${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1} -d -p 8085:8080 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
+//                                         status_health_check= groovy_file.checkHealthDeploy()
+//                                         if("${status_health_check}" == "200"){
+//                                                 echo "Deploy Sucess"
+//                                         }else{
+//                                                 error "Deploy Failed"
+//                                         }
+//                                 }
+// 			}
+// 		}
 	}
 }
