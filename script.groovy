@@ -5,12 +5,13 @@ def getTime(){
         LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
 }
 def getVersionApp() {
-        sh(script: "head -20 ${env.WORKSPACE}/pom.xml | grep '<version>' | tail -1 | cut -d '>' -f2 | cut -d '<' -f1",returnStdout: true).trim()
+        sh(script: "head -10 ${env.WORKSPACE}/pom.xml | grep '<version>' | tail -1 | cut -d '>' -f2 | cut -d '<' -f1 | cut -d '-' -f1",returnStdout: true).trim()
 }
 
 def getVersionBuildinDay() {
         now = getTime()
-        sh(script: "curl http://192.168.10.137:8081/service/rest/repository/browse/simpleapp-snapshot/org/springframework/samples/spring-petclinic/2.5.0-SNAPSHOT/ | grep 2.5.0-${now} | wc -l",returnStdout: true).trim()
+        version_app = getVersionApp()
+        sh(script: "curl http://192.168.10.137:8081/service/rest/repository/browse/simpleapp-snapshot/org/springframework/samples/spring-petclinic/2.5.0-SNAPSHOT/ | grep ${version_app}-${now} | wc -l",returnStdout: true).trim()
 }
 
 def getTagsImageDocker() {
