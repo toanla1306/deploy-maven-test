@@ -13,6 +13,13 @@ def getVersionBuildinDay() {
         sh(script: "curl http://192.168.10.135:8081/service/rest/repository/browse/simpleapp-snapshot/org/springframework/samples/spring-petclinic/2.5.0-SNAPSHOT/ | grep 2.5.0-${now} | wc -l",returnStdout: true).trim()
 }
 
+def getTagsImageDocker() {
+        now = getTime()
+        version_app = getVersionApp()
+        version_build_in_day = getVersionBuildinDay()
+        echo "${now}-${version_app}-${version_build_in_day}"
+}
+
 def loginDockerwithNexus() {
         withCredentials([usernamePassword(credentialsId:'dockerlogin', passwordVariable: 'password', usernameVariable: 'username')]) {
                                                 sh "docker login -u $username -p $password 192.168.10.135:8085"
