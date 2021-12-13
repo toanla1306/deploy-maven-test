@@ -11,7 +11,7 @@ def getVersionApp() {
 def getVersionBuildinDay() {
         now = getTime()
         version_app = getVersionApp()
-        sh(script: "curl http://192.168.10.137:8081/service/rest/repository/browse/simpleapp-snapshot/org/springframework/samples/spring-petclinic/2.5.0-SNAPSHOT/ | grep ${version_app}-${now} | wc -l",returnStdout: true).trim()
+        sh(script: "curl http://nexus-repository.com:8081/service/rest/repository/browse/simpleapp-snapshot/org/springframework/samples/spring-petclinic/2.5.0-SNAPSHOT/ | grep ${version_app}-${now} | wc -l",returnStdout: true).trim()
 }
 
 def getTagsImageDocker() {
@@ -23,12 +23,12 @@ def getTagsImageDocker() {
 
 def loginDockerwithNexus() {
         withCredentials([usernamePassword(credentialsId:'dockerlogin', passwordVariable: 'password', usernameVariable: 'username')]) {
-                                                sh "docker login -u $username -p $password 192.168.10.137:8085"
+                                                sh "docker login -u $username -p $password nexus-repository.com:8085"
                                         }
 }
 
 def checkHealthDeploy() {
-        sh(script: 'curl -I 192.168.10.140:8085 | grep HTTP | cut -d " " -f2', returnStdout: true).trim()
+        sh(script: 'curl -I release-vm.com:8085 | grep HTTP | cut -d " " -f2', returnStdout: true).trim()
 }
 
 return this
