@@ -42,13 +42,24 @@ pipeline {
                                         tag_image_docker = groovy_file.getTagsImageDocker()
                                         groovy_file.loginDockerwithNexus()
                                         sh "docker pull 192.168.10.135:8085/petclinic-image:${tag_image_docker}"
-                                        sh "docker run --name check-health-${tag_image_docker} -d -p 8085:8080 192.168.10.135:8085/petclinic-image:${tag_image_docker}"
+                                        id_container_old = sh(script: "docker ps -a | tail -1 | cut -d ' ' -f1", returnStdout: true).trim()
+                                        sh "docker stop ${image_old_id}"
+                                        sh "docker run --name check-health-${id_container_old} -d -p 8085:8080 192.168.10.135:8085/petclinic-image:${tag_image_docker}"
                                         sleep(time:10,unit:"SECONDS")
                                         status_health_check= groovy_file.checkHealthDeploy()
                                         if("${status_health_check}" == "200"){
+                                                check_list_container_null = sh(script: "docker ps -a | wc -l", returnStdout: true).trim()
+                                                if("${check_list_container_null}" != "1") {
+                                                        sh "docker rm ${id_container_old}"
+                                                }
                                                 echo "Deploy Sucess"
                                         }else{
-                                                error "Deploy Failed"
+                                                id_container_new = sh(script: "docker ps -a | grep check-health-${tag_image_docker} | cut -d ' ' -f1", returnStdout: true).trim()
+                                                sh "docker stop ${id_container_new}"
+                                                sh "docker rm ${id_container_new}"
+                                                sh "docker start ${id_container_old}"
+                                                
+                                                echo "Deploy Failed"
                                         }
                                 }
 			}
