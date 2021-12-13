@@ -50,7 +50,7 @@ pipeline {
                                         sh "docker run --name check-health-${id_container_old} -d -p 8085:8080 192.168.10.135:8085/petclinic-image:${tag_image_docker}"
                                         sleep(time:10,unit:"SECONDS")
                                         status_health_check= groovy_file.checkHealthDeploy()
-                                        if("${status_health_check}" == "200"){
+                                        if("${status_health_check}" == "203"){
                                                 if("${check_list_container_null}" != "1") {
                                                         sh "docker rm ${id_container_old}"
                                                 }
