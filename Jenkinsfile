@@ -2,6 +2,7 @@ import java.time.*
 import java.time.format.DateTimeFormatter
 
 def now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
+def groovy_file
 
 pipeline {
 	agent none
@@ -9,6 +10,14 @@ pipeline {
 		maven "Maven"
 	}
 	stages {
+                stage('Load file groovy') {
+                      agent any
+                      steps {
+                              script {
+                                      groovy_file = load "script.groovy"
+                              }
+                      }
+                }
 // 		stage('Deploy to Nexus'){
 //                         agent any
 // 			steps{
