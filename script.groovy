@@ -17,7 +17,7 @@ def getTagsImageDocker() {
         now = getTime()
         version_app = getVersionApp()
         version_build_in_day = getVersionBuildinDay()
-        echo "${now}-${version_app}-${version_build_in_day}"
+        return "${now}-${version_app}-${version_build_in_day}"
 }
 
 def loginDockerwithNexus() {
