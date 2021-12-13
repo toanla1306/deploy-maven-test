@@ -30,11 +30,11 @@ pipeline {
 			steps{
                                 script {
                                         VERSION_APP= groovy_file.getVersionApp()
-                                        BUILD_ID_IN_DAY= groovy_file.getVersionBuildinDay()
-                                        groovy_file.loginDockerwithNexus()
-                                        sh 'docker login -u admin -p 123 192.168.10.135:8085'
-				        sh "docker build /var/lib/jenkins/workspace/simple-app/ -t 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
-				        sh "docker push 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
+//                                         BUILD_ID_IN_DAY= groovy_file.getVersionBuildinDay()
+//                                         groovy_file.loginDockerwithNexus()
+//                                         sh 'docker login -u admin -p 123 192.168.10.135:8085'
+// 				        sh "docker build /var/lib/jenkins/workspace/simple-app/ -t 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
+// 				        sh "docker push 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
                                 }        
 			}
 		}
