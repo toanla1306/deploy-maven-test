@@ -22,7 +22,7 @@ def getTagsImageDocker() {
 
 def loginDockerwithNexus() {
         withCredentials([usernamePassword(credentialsId:'dockerlogin', passwordVariable: 'password', usernameVariable: 'username')]) {
-                                                sh "docker login -u $username -p $password 192.168.10.137:8085"
+                                                sh "docker login -u $username -p $password http://192.168.10.137:8085"
                                         }
 }
 
