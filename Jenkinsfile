@@ -1,7 +1,3 @@
-import java.time.*
-import java.time.format.DateTimeFormatter
-
-def now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
 def groovy_file
 
 pipeline {
@@ -31,6 +27,9 @@ pipeline {
                                 script {
                                         VERSION_APP= groovy_file.getVersionApp()
                                         BUILD_ID_IN_DAY= groovy_file.getVersionBuildinDay()
+                                        now = groovy_file.getTime()
+                                        tag = groovy_file.getTagsImageDocker()
+                                        echo tag
 //                                         groovy_file.loginDockerwithNexus()
 //                                         sh 'docker login -u admin -p 123 192.168.10.135:8085'
 // 				        sh "docker build /var/lib/jenkins/workspace/simple-app/ -t 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
@@ -46,6 +45,7 @@ pipeline {
 //                                 script{
 //                                         VERSION_APP= groovy_file.getVersionApp()
 //                                         BUILD_ID_IN_DAY= groovy_file.getVersionBuildinDay()
+//                                         now = groovy_file.getTime()
 //                                         groovy_file.loginDockerwithNexus()
 //                                         sh "docker pull 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
 //                                         sh "docker run --name check-health-${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1} -d -p 8085:8080 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
