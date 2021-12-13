@@ -55,7 +55,7 @@ pipeline {
                                                 }
                                                 echo "Deploy Sucess"
                                         }else{
-                                                id_container_new = sh(script: "docker ps -a | head -2 | cut -d ' ' -f1", returnStdout: true).trim()
+                                                id_container_new = sh(script: "docker ps -a | head -2 | tail -1 | cut -d ' ' -f1", returnStdout: true).trim()
                                                 sh "docker stop ${id_container_new}"
                                                 sh "docker rm ${id_container_new}"
                                                 sh "docker start ${id_container_old}"
