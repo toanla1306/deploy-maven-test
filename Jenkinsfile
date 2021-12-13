@@ -31,6 +31,8 @@ pipeline {
                                         sh 'docker login -u admin -p 123 192.168.10.135:8085'
 				        sh "docker build /var/lib/jenkins/workspace/simple-app/ -t 192.168.10.135:8085/petclinic-image:${tag_image_docker}-${BUILD_ID_IN_DAY}"
 				        sh "docker push 192.168.10.135:8085/petclinic-image:${tag_image_docker}-${BUILD_ID_IN_DAY.toInteger() + 1}"
+                                        now = groovy_file.getTime()
+                                        echo now
                                 }        
 			}
 		}
