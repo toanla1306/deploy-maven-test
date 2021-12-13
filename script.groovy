@@ -10,7 +10,7 @@ def getVersionApp() {
 
 def getVersionBuildinDay() {
         now = getTime()
-        sh(script: "curl http://192.168.10.135:8081/service/rest/repository/browse/simpleapp-snapshot/org/springframework/samples/spring-petclinic/2.5.0-SNAPSHOT/ | grep 2.5.0-${now} | wc -l",returnStdout: true).trim()
+        sh(script: "curl http://192.168.10.137:8081/service/rest/repository/browse/simpleapp-snapshot/org/springframework/samples/spring-petclinic/2.5.0-SNAPSHOT/ | grep 2.5.0-${now} | wc -l",returnStdout: true).trim()
 }
 
 def getTagsImageDocker() {
