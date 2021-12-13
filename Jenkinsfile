@@ -25,15 +25,12 @@ pipeline {
 			agent any
 			steps{
                                 script {
-                                        VERSION_APP= groovy_file.getVersionApp()
-                                        BUILD_ID_IN_DAY= groovy_file.getVersionBuildinDay()
-                                        now = groovy_file.getTime()
-                                        tag = groovy_file.getTagsImageDocker()
-                                        echo tag
-//                                         groovy_file.loginDockerwithNexus()
-//                                         sh 'docker login -u admin -p 123 192.168.10.135:8085'
-// 				        sh "docker build /var/lib/jenkins/workspace/simple-app/ -t 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
-// 				        sh "docker push 192.168.10.135:8085/petclinic-image:${now}-${VERSION_APP}-${BUILD_ID_IN_DAY.toInteger() + 1}"
+                                        BUILD_ID_IN_DAY = groovy_file.getVersionBuildinDay()
+                                        tag_image_docker = groovy_file.getTagsImageDocker()
+                                        groovy_file.loginDockerwithNexus()
+                                        sh 'docker login -u admin -p 123 192.168.10.135:8085'
+				        sh "docker build /var/lib/jenkins/workspace/simple-app/ -t 192.168.10.135:8085/petclinic-image:${tag_image_docker}-${BUILD_ID_IN_DAY}"
+				        sh "docker push 192.168.10.135:8085/petclinic-image:${tag_image_docker}-${BUILD_ID_IN_DAY.toInteger() + 1}"
                                 }        
 			}
 		}
