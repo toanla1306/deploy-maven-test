@@ -14,13 +14,13 @@ pipeline {
                               }
                       }
                 }
-		stage('Deploy to Nexus'){
-                        agent any
-			steps{
-                sh "mvn -X clean deploy"
-                sh 'curl -L -X GET "http://192.168.10.137:8081/service/rest/v1/search/assets/download?sort=version&repository=simpleapp-snapshot&maven.groupId=org.springframework.samples&maven.artifactId=spring-petclinic&maven.extension=jar" -H "accept: application/json" --output /var/lib/jenkins/workspace/simple-app/petclinic.jar'		
-			}
-		}
+// 		stage('Deploy to Nexus'){
+//                         agent any
+// 			steps{
+//                 sh "mvn -X clean deploy"
+//                 sh 'curl -L -X GET "http://192.168.10.137:8081/service/rest/v1/search/assets/download?sort=version&repository=simpleapp-snapshot&maven.groupId=org.springframework.samples&maven.artifactId=spring-petclinic&maven.extension=jar" -H "accept: application/json" --output /var/lib/jenkins/workspace/simple-app/petclinic.jar'		
+// 			}
+// 		}
 		stage('build docker image'){
 			agent any
 			steps{
