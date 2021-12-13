@@ -60,6 +60,7 @@ pipeline {
                                         // }else{
                                         //         error "Deploy Failed"
                                         // }
+                                        groovy_file.loginDockerwithNexus()
                                         test = groovy_file.getVersionApp()
                                         echo "${test}"
                                 }
