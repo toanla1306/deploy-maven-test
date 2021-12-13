@@ -61,7 +61,7 @@ pipeline {
                                         //         error "Deploy Failed"
                                         // }
                                         test = groovy_file.getVersionApp()
-                                        echo test
+                                        echo "${test}"
                                 }
 			}
 		}
