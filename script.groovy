@@ -54,7 +54,14 @@ def checkHealthDeploy() {
 
 def sshReleaseVM(commandline){
         withCredentials([usernamePassword(credentialsId:'vmrelease', passwordVariable: 'password', usernameVariable: 'username')]) {
-                sh "sshpass -p ${password} ssh -o stricthostkeychecking=no ${username}@release-vm.com ${commandline}"
+                sh(script: "sshpass -p ${password} ssh -o stricthostkeychecking=no ${username}@release-vm.com ${commandline}", returnStdout: true).trim()
         }
 }
+
+// def sshReleaseVMDetectValue(commandline) {
+//         withCredentials([usernamePassword(credentialsId:'vmrelease', passwordVariable: 'password', usernameVariable: 'username')]) {
+//                 sh "sshpass -p ${password} ssh -o stricthostkeychecking=no ${username}@release-vm.com ${commandline}"
+//         }
+// }
+
 return this
