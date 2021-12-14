@@ -28,7 +28,27 @@ def loginDockerwithNexus() {
 }
 
 def checkHealthDeploy() {
-        sh(script: 'curl -I release-vm.com:8085 | grep HTTP | cut -d " " -f2', returnStdout: true).trim()
+        sh "docker pull nexus-repository.com:8085/petclinic-image:${tag_image_docker}"
+        check_list_container_null = sh(script: "docker ps -a | wc -l", returnStdout: true).trim()
+        if("${check_list_container_null}" != "1") {
+                id_container_old = sh(script: "docker ps -a | tail -1 | cut -d ' ' -f1", returnStdout: true).trim()
+                sh "docker stop ${id_container_old}"
+        }
+        sh "docker run --name check-health-${id_container_old} -d -p 8085:8080 nexus-repository.com:8085/petclinic-image:${tag_image_docker}"
+        sleep(time:10,unit:"SECONDS")
+        status_health_check= sh(script: 'curl -I release-vm.com:8085 | grep HTTP | cut -d " " -f2', returnStdout: true).trim()
+        if("${status_health_check}" == "202"){
+                if("${check_list_container_null}" != "1") {
+                        sh "docker rm ${id_container_old}"
+                }
+                echo "Deploy Sucess"
+        }else{
+                id_container_new = sh(script: "docker ps -a | head -2 | tail -1 | cut -d ' ' -f1", returnStdout: true).trim()
+                sh "docker stop ${id_container_new}"
+                sh "docker rm ${id_container_new}"
+                sh "docker start ${id_container_old}"
+                                                
+                echo "Deploy Failed"
+        }
 }
-
 return this
