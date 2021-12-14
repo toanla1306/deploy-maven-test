@@ -48,6 +48,7 @@ pipeline {
                         agent any
                         steps {
                                 script{
+                                        tag_image_docker = groovy_file.getTagsImageDocker()
                                         groovy_file.loginDockerwithNexus()
                                         groovy_file.checkHealthDeploy()
                                 }
