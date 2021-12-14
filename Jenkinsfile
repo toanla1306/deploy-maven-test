@@ -47,7 +47,9 @@ pipeline {
                 stage('test sshpass') {
                         agent any
                         steps {
-                                groovy_file.sshReleaseVM("ls -la | grep Downloads")
+                                script{
+                                        groovy_file.sshReleaseVM("ls -la | grep Downloads")
+                                }
                         }
                 }
 	}
