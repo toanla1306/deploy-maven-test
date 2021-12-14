@@ -21,15 +21,15 @@ def getTagsImageDocker() {
         return "${now}-${version_app}-${version_build_in_day}"
 }
 
-def loginDockerwithNexus() {
-        withCredentials([usernamePassword(credentialsId:'dockerlogin', passwordVariable: 'password', usernameVariable: 'username')]) {
-                                                sh "docker login -u $username -p $password nexus-repository.com:8085"
-                                        }
-}
-
 def sshReleaseVM(commandline, value_return_stdout){
         withCredentials([usernamePassword(credentialsId:'vmrelease', passwordVariable: 'password', usernameVariable: 'username')]) {
                 sh(script: "sshpass -p ${password} ssh -o stricthostkeychecking=no ${username}@release-vm.com ${commandline}", returnStdout: value_return_stdout)
+        }
+}
+
+def loginDockerwithNexus() {
+        withCredentials([usernamePassword(credentialsId:'dockerlogin', passwordVariable: 'password', usernameVariable: 'username')]) {
+                sshReleaseVM( "docker login -u $username -p $password nexus-repository.com:8085", false)
         }
 }
 
