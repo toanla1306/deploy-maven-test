@@ -27,9 +27,14 @@ def sshReleaseVM(commandline, value_return_stdout=false){
         }
 }
 
-def loginDockerwithNexus() {
+// vm=JenkinsVM or ReleaseVM
+def loginDockerwithNexus(vm='JenkinsVM') {
         withCredentials([usernamePassword(credentialsId:'dockerlogin', passwordVariable: 'password', usernameVariable: 'username')]) {
-                sshReleaseVM( "docker login -u $username -p $password nexus-repository.com:8085")
+                if(vm='JenkinsVM'){
+                        sh("docker login -u $username -p $password nexus-repository.com:8085")
+                }else if(vm='ReleaseVM'){
+                        sshReleaseVM("docker login -u $username -p $password nexus-repository.com:8085")
+                }
         }
 }
 
