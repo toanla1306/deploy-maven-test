@@ -27,34 +27,45 @@ def loginDockerwithNexus() {
                                         }
 }
 
-def checkHealthDeploy() {
-        sh "docker pull nexus-repository.com:8085/petclinic-image:${tag_image_docker}"
-        check_list_container_null = sh(script: "docker ps -a | wc -l", returnStdout: true).trim()
-        if("${check_list_container_null}" != "1") {
-                id_container_old = sh(script: "docker ps -a | tail -1 | cut -d ' ' -f1", returnStdout: true).trim()
-                sh "docker stop ${id_container_old}"
-        }
-        sh "docker run --name check-health-${id_container_old} -d -p 8085:8080 nexus-repository.com:8085/petclinic-image:${tag_image_docker}"
-        sleep(time:10,unit:"SECONDS")
-        status_health_check= sh(script: 'curl -I release-vm.com:8085 | grep HTTP | cut -d " " -f2', returnStdout: true).trim()
-        if("${status_health_check}" == "200"){
-                if("${check_list_container_null}" != "1") {
-                        sh "docker rm ${id_container_old}"
-                }
-                echo "Deploy Sucess"
-        }else{
-                id_container_new = sh(script: "docker ps -a | head -2 | tail -1 | cut -d ' ' -f1", returnStdout: true).trim()
-                sh "docker stop ${id_container_new}"
-                sh "docker rm ${id_container_new}"
-                sh "docker start ${id_container_old}"
-                                                
-                echo "Deploy Failed"
-        }
-}
-
 def sshReleaseVM(commandline, value_return_stdout){
         withCredentials([usernamePassword(credentialsId:'vmrelease', passwordVariable: 'password', usernameVariable: 'username')]) {
                 sh(script: "sshpass -p ${password} ssh -o stricthostkeychecking=no ${username}@release-vm.com ${commandline}", returnStdout: value_return_stdout)
+        }
+}
+
+def checkHealthDeploy() {
+        sshReleaseVM("docker pull nexus-repository.com:8085/petclinic-image:${tag_image_docker}", false)
+        check_list_container_null = sshReleaseVM("docker ps -a | wc -l", true).trim()
+//         sh "docker pull nexus-repository.com:8085/petclinic-image:${tag_image_docker}"
+//         check_list_container_null = sh(script: "docker ps -a | wc -l", returnStdout: true).trim()
+        if("${check_list_container_null}" != "1") {
+                id_container_old = sshReleaseVM("docker ps -a | tail -1 | cut -d ' ' -f1", true).trim()
+                sshReleaseVM("docker stop ${id_container_old}", false)
+//                 id_container_old = sh(script: "docker ps -a | tail -1 | cut -d ' ' -f1", returnStdout: true).trim()
+//                 sh "docker stop ${id_container_old}"
+        }
+        sshReleaseVM("docker run --name check-health-${id_container_old} -d -p 8085:8080 nexus-repository.com:8085/petclinic-image:${tag_image_docker}", false)
+//         sh "docker run --name check-health-${id_container_old} -d -p 8085:8080 nexus-repository.com:8085/petclinic-image:${tag_image_docker}"
+        sleep(time:10,unit:"SECONDS")
+        status_health_check = sshReleaseVM('curl -I release-vm.com:8085 | grep HTTP | cut -d " " -f2', true).trim()
+//         status_health_check= sh(script: 'curl -I release-vm.com:8085 | grep HTTP | cut -d " " -f2', returnStdout: true).trim()
+        if("${status_health_check}" == "200"){
+                if("${check_list_container_null}" != "1") {
+                        sshReleaseVM("docker rm ${id_container_old}", false)
+//                         sh "docker rm ${id_container_old}"
+                }
+                echo "Deploy Sucess"
+        }else{
+                id_container_new = sshReleaseVM("docker ps -a | head -2 | tail -1 | cut -d ' ' -f1", true).trim()
+                sshReleaseVM("docker stop ${id_container_new}", false)
+                sshReleaseVM("docker rm ${id_container_new}", false)
+                sshReleaseVM("docker start ${id_container_old}", false)
+//                 id_container_new = sh(script: "docker ps -a | head -2 | tail -1 | cut -d ' ' -f1", returnStdout: true).trim()
+//                 sh "docker stop ${id_container_new}"
+//                 sh "docker rm ${id_container_new}"
+//                 sh "docker start ${id_container_old}"
+                                                
+                echo "Deploy Failed"
         }
 }
 
