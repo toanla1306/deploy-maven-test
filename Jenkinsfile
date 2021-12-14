@@ -17,7 +17,7 @@ pipeline {
 		stage('Deploy to Nexus'){
                         agent any
 			steps{
-                               echo file_groovy.getVersionBuildinDay() 
+                               echo groovy_file.getVersionBuildinDay() 
 //                 sh "mvn -X clean deploy"
 //                 sh 'curl -L -X GET "http://nexus-repository.com:8081/service/rest/v1/search/assets/download?sort=version&repository=simpleapp-snapshot&maven.groupId=org.springframework.samples&maven.artifactId=spring-petclinic&maven.extension=jar" -H "accept: application/json" --output /var/lib/jenkins/workspace/simple-app/petclinic.jar'		
 			}
