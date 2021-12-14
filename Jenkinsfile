@@ -1,4 +1,4 @@
-// def groovy_file
+def groovy_file
 
 pipeline {
 	agent none
@@ -6,14 +6,14 @@ pipeline {
 		maven "Maven"
 	}
 	stages {
-//                 stage('Load file groovy') {
-//                       agent any
-//                       steps {
-//                               script {
-//                                       groovy_file = load "script.groovy"
-//                               }
-//                       }
-//                 }
+                stage('Load file groovy') {
+                      agent any
+                      steps {
+                              script {
+                                      groovy_file = load "script.groovy"
+                              }
+                      }
+                }
 // 		stage('Deploy to Nexus'){
 //                         agent any
 // 			steps{
@@ -47,9 +47,7 @@ pipeline {
                 stage('test sshpass') {
                         agent any
                         steps {
-                                withCredentials([usernamePassword(credentialsId:'vmrelease', passwordVariable: 'password', usernameVariable: 'username')]) {
-                                        sh "sshpass -p ${password} ssh -o stricthostkeychecking=no ${username}@release-vm.com ls -la | grep Downloads"
-                                }
+                                groovy_file.sshReleaseVM("ls -la | grep Downloads")
                         }
                 }
 	}
