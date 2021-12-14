@@ -48,8 +48,8 @@ pipeline {
                         agent any
                         steps {
                                 script{
-                                        test = groovy_file.sshReleaseVM("ls -la | grep Downloads", false)
-                                        echo "${test}"
+                                        groovy_file.loginDockerwithNexus()
+                                        groovy_file.checkHealthDeploy()
                                 }
                         }
                 }
