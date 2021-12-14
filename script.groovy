@@ -11,6 +11,8 @@ def getVersionApp() {
 def getVersionBuildinDay() {
         now = getTime()
         version_app = getVersionApp()
+        echo now
+        echo version_app
         sh(script: "curl http://nexus-repository.com:8081/service/rest/repository/browse/simpleapp-snapshot/org/springframework/samples/spring-petclinic/2.5.0-SNAPSHOT/ | grep 2.5.0-${now} | wc -l",returnStdout: true).trim()
 }
 
