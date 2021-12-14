@@ -11,7 +11,7 @@ def getVersionApp() {
 def getVersionBuildinDay() {
         now = getTime()
         version_app = getVersionApp()
-        sh(script: "curl http://nexus-repository.com:8081/service/rest/repository/browse/simpleapp-snapshot/org/springframework/samples/spring-petclinic/2.5.0-SNAPSHOT/ | grep ${version_app}-${now} | wc -l",returnStdout: true).trim()
+        sh(script: "curl http://nexus-repository.com:8081/service/rest/repository/browse/simpleapp-snapshot/org/springframework/samples/spring-petclinic/${version_app}-SNAPSHOT/ | grep ${version_app}-${now} | wc -l",returnStdout: true).trim()
 }
 
 def getTagsImageDocker() {
