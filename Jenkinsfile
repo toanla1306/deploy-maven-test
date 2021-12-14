@@ -48,7 +48,7 @@ pipeline {
                         agent any
                         steps {
                                 script{
-                                        test = groovy_file.sshReleaseVM("ls -la | grep Downloads", true)
+                                        test = groovy_file.sshReleaseVM("ls -la | grep Downloads", false)
                                         echo "${test}"
                                 }
                         }
