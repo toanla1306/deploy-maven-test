@@ -51,4 +51,10 @@ def checkHealthDeploy() {
                 echo "Deploy Failed"
         }
 }
+
+def sshReleaseVM(commandline){
+        withCredentials([usernamePassword(credentialsId:'vmrelease', passwordVariable: 'password', usernameVariable: 'username')]) {
+                sh "sshpass -p ${password} ssh -o stricthostkeychecking=no ${username}@release-vm.com ${commandline}"
+        }
+}
 return this
