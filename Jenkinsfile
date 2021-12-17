@@ -49,6 +49,7 @@ pipeline {
                                                 -D sonar.projectKey=sonarqubetest \
                                                 -D sonar.exclusions=vendor/**,resources/**, **/*.java\
                                                 -D sonar.host.url=http://192.168.10.136:9000/"
+                                        }
                                 }
                         }
                 }
