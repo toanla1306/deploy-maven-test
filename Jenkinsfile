@@ -47,7 +47,9 @@ pipeline {
                                                 -D sonar.login=admin \
                                                 -D sonar.password=123 \
                                                 -D sonar.projectKey=sonarqubetest \
-                                                -D sonar.exclusions=vendor/**,test/**,**/*.java \
+                                                -D sonar.test=src \
+                                                -D sonar.test.inclusions=**/test/**,**/*.java \
+                                                //-D sonar.exclusions=vendor/**,test/**,**/*.java \
                                                 -D sonar.host.url=http://192.168.10.128:9000/"
                                         }
                                 }
