@@ -56,9 +56,12 @@ pipeline {
 //                 }
                 stage('unit test'){
                         steps{
-                                sh "cd ${env.WORKSPACE}/lib/; wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.7.0/junit-platform-console-standalone-1.7.0-all.jar"
-                                sh "cd ${env.WORKSPACE}/src/test/java/org/springframework/samples/petclinic/ ; javac -cp '${env.WORKSPACE}/lib/junit-platform-console-standalone-1.7.0-all.jar' PetclinicIntegrationTests.java"
-                                //sh "cd ${env.WORKSPACE}/src/test/java/org/springframework/samples/petclinic/; java -jar ${env.WORKSPACE}/lib/junit-platform-console-standalone-1.7.0-all.jar -cp '.' --select-class PetclinicIntegrationTests --reports-dir='${env.WORKSPACE}/reports/'"
+                                script{
+                                        
+                                        sh "cd ${env.WORKSPACE}/lib/; wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.7.0/junit-platform-console-standalone-1.7.0-all.jar"
+                                        sh "cd ${env.WORKSPACE}/src/test/java/org/springframework/samples/petclinic/; javac -cp '${env.WORKSPACE}/lib/junit-platform-console-standalone-1.7.0-all.jar' PetclinicIntegrationTests.java"
+                                        //sh "cd ${env.WORKSPACE}/src/test/java/org/springframework/samples/petclinic/; java -jar ${env.WORKSPACE}/lib/junit-platform-console-standalone-1.7.0-all.jar -cp '.' --select-class PetclinicIntegrationTests --reports-dir='${env.WORKSPACE}/reports/'"
+                                }
                         }
                 }
 	}
