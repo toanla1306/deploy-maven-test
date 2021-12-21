@@ -75,7 +75,9 @@ pipeline {
                         }
                         post {
                                 always{
-                                        junit '**/target/surefire-reports/*.xml'
+                                        withChecks('Integration Tests'){
+                                                junit '**/target/surefire-reports/*.xml'
+                                        }
                                 }
                         }
                 }
