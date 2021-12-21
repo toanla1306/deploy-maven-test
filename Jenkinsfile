@@ -54,32 +54,32 @@ pipeline {
 //                                 }
 //                         }
 //                 }
-//                 stage('unit test'){
-//                         steps{
-//                                 script{
-//                                         try{ 
-//                                                 sh "cd ${env.WORKSPACE}/lib/; wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.8.2/junit-platform-console-standalone-1.8.2.jar"
-//                                                 sh "cd ${env.WORKSPACE}/src/test/java/org/springframework/samples/petclinic/; javac -cp '${env.WORKSPACE}/lib/junit-platform-console-standalone-1.8.2.jar' PetclinicIntegrationTests.java"
-//                                         } catch(e) {
-//                                                 echo e.toString()
-//                                         } finally {
-//                                                 sh "cd ${env.WORKSPACE}/src/test/java/org/springframework/samples/petclinic/; java -jar ${env.WORKSPACE}/lib/junit-platform-console-standalone-1.8.2.jar -cp '.' --select-class PetclinicIntegrationTests --reports-dir='reports'"
-//                                         }
-//                                 }
-//                         }
-//                 }
                 stage('unit test'){
                         steps{
-                                sh 'chmod +x ./mvnw'
-                                sh 'mvn test'
-                        }
-                        post {
-                                always{
-                                        withChecks('Integration Tests'){
-                                                junit "**/target/surefire-reports/*.xml"
+                                script{
+                                        try{ 
+                                                sh "cd ${env.WORKSPACE}/lib/; wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.8.2/junit-platform-console-standalone-1.8.2.jar"
+                                                sh "cd ${env.WORKSPACE}/src/test/java/org/springframework/samples/petclinic/; javac -cp '${env.WORKSPACE}/lib/junit-platform-console-standalone-1.8.2.jar' PetclinicIntegrationTests.java"
+                                        } catch(e) {
+                                                echo e.toString()
+                                        } finally {
+                                                sh "cd ${env.WORKSPACE}/src/test/java/org/springframework/samples/petclinic/; java -jar ${env.WORKSPACE}/lib/junit-platform-console-standalone-1.8.2.jar -cp '.' --select-class PetclinicIntegrationTests --reports-dir='reports'"
                                         }
                                 }
                         }
                 }
+//                 stage('unit test'){
+//                         steps{
+//                                 sh 'chmod +x ./mvnw'
+//                                 sh 'mvn test'
+//                         }
+//                         post {
+//                                 always{
+//                                         withChecks('Integration Tests'){
+//                                                 junit "**/target/surefire-reports/*.xml"
+//                                         }
+//                                 }
+//                         }
+//                 }
 	}
 }
