@@ -77,7 +77,7 @@ pipeline {
                                 always{
                                         withChecks('Integration Tests'){
                                                 junit "**/target/surefire-reports/*.xml"
-                                                junit skipPublishingChecks: true, testResults: "${env.WORKSPACE}/target/surefire-reports/TEST-org.springframework.samples.petclinic.PetclinicIntegrationTests.xml"
+                                                junit skipPublishingChecks: true, testResults: "${env.WORKSPACE}/target/site/jacoco/index.html"
                                         }
                                 }
                         }
