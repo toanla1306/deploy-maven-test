@@ -76,7 +76,7 @@ pipeline {
                         post {
                                 always{
                                         withChecks('Integration Tests'){
-                                                junit "${env.WORKSPACE}/target/surefire-reports/*.xml"
+                                                junit "./target/surefire-reports/*.xml"
                                         }
                                 }
                         }
