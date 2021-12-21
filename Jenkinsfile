@@ -70,6 +70,7 @@ pipeline {
 //                 }
                 stage('unit test'){
                         steps{
+                                sh 'chmod +x ./mvnw'
                                 sh './mvnw test'
                         }
                         post {
