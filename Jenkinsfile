@@ -38,20 +38,28 @@ pipeline {
 //                                 }
 // 			}
 // 		}
-                stage('unit test') {
-                        steps {
-                                script {
-                                        def scannerHome = tool 'sonarqube';
-                                        withSonarQubeEnv('sonarqube') {
-                                                sh "${scannerHome}/bin/sonar-scanner \
-                                                -D sonar.login=admin \
-                                                -D sonar.password=123 \
-                                                -D sonar.projectKey=sonarqubetest \
-                                                -D sonar.test=src \
-                                                -D sonar.test.inclusions=**/test/**,**/*.java \
-                                                -D sonar.host.url=http://192.168.10.128:9000/"
-                                        }
-                                }
+//                 stage('check quality code') {
+//                         steps {
+//                                 script {
+//                                         def scannerHome = tool 'sonarqube';
+//                                         withSonarQubeEnv('sonarqube') {
+//                                                 sh "${scannerHome}/bin/sonar-scanner \
+//                                                 -D sonar.login=admin \
+//                                                 -D sonar.password=123 \
+//                                                 -D sonar.projectKey=sonarqubetest \
+//                                                 -D sonar.test=src \
+//                                                 -D sonar.test.inclusions=**/test/**,**/*.java \
+//                                                 -D sonar.host.url=http://192.168.10.128:9000/"
+//                                         }
+//                                 }
+//                         }
+//                 }
+                stage('unit test'){
+                        steps{
+                                sh "mkdir ${env.WORKSPACE}/lib/"
+                                sh "cd ${env.WORKSPACE}/lib/; wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.7.0/junit-platform-console-standalone-1.7.0-all.jar"
+                                sh "cd ${env.WORKSPACE}/src/test/java/org/springframework/samples/petclinic/ ; javac -cp '${env.WORKSPACE}/lib/junit-platform-console-standalone-1.7.0-all.jar' PetclinicIntegrationTests.java"
+                                sh "java -jar ${env.WORKSPACE}/lib/junit-platform-console-standalone-1.7.0-all.jar -cp '.' --select-class PetclinicIntegrationTests --reports-dir='reports'"
                         }
                 }
 	}
