@@ -63,7 +63,7 @@ pipeline {
                                         } catch(e) {
                                                 echo e.toString()
                                         } finally {
-                                                sh "cd ${env.WORKSPACE}/src/test/java/org/springframework/samples/petclinic/; java -jar ${env.WORKSPACE}/lib/junit-platform-console-standalone-1.7.0-all.jar -cp '.' --select-class PetclinicIntegrationTests --reports-dir='${env.WORKSPACE}/reports/'"
+                                                sh "cd ${env.WORKSPACE}/src/test/java/org/springframework/samples/petclinic/; java -jar ${env.WORKSPACE}/lib/junit-platform-console-standalone-1.7.0-all.jar -cp '.' --select-class PetclinicIntegrationTests --reports-dir='${env.WORKSPACE}/reports'"
                                         }
                                 }
                         }
