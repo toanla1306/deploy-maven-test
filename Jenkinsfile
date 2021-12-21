@@ -75,7 +75,7 @@ pipeline {
                         }
                         post {
                                 always{
-                                        junit "${env.WORKSPACE}/target/surefire-reports/*.xml"
+                                        junit '**/target/surefire-reports/TEST-*.xml'
                                 }
                         }
                 }
