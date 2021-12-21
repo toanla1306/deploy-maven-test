@@ -77,6 +77,7 @@ pipeline {
                                 always{
                                         withChecks('Integration Tests'){
                                                 junit "target/surefire-reports/**/*.xml"
+                                                step( [ $class: 'JacocoPublisher' ] )
                                                 //junit skipPublishingChecks: true, testResults: "${env.WORKSPACE}/target/site/jacoco/index.html"
                                         }
                                 }
