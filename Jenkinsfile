@@ -58,8 +58,8 @@ pipeline {
                         steps{
                                 script{
                                         try{ 
-                                                sh "cd ${env.WORKSPACE}/lib/; wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.8.2/junit-platform-console-standalone-1.8.2.jar"
-                                                sh "javac -d target -cp target:lib/junit-platform-console-standalone-1.8.2.jar src/test/java/org/springframework/samples/petclinic/**/*.java"
+                                                //sh "cd ${env.WORKSPACE}/lib/; wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.8.2/junit-platform-console-standalone-1.8.2.jar"
+                                                sh (script: "javac -d target -cp target:lib/junit-platform-console-standalone-1.8.2.jar src/test/java/org/springframework/samples/petclinic/**/*.java", returnStatus:true)
                                         } catch(e) {
                                                 echo e.toString()
                                         } finally {
