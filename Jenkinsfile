@@ -54,34 +54,35 @@ pipeline {
 //                                 }
 //                         }
 //                 }
-//                 stage('unit test'){
-//                         steps{
-//                                 script{
-//                                         try{ 
-//                                                 sh "cd ${env.WORKSPACE}/lib/; wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.8.2/junit-platform-console-standalone-1.8.2.jar"
-//                                                 sh "cd ${env.WORKSPACE}/src/test/java/org/springframework/samples/petclinic/; javac -cp '${env.WORKSPACE}/lib/junit-platform-console-standalone-1.8.2.jar' PetclinicIntegrationTests.java"
-//                                         } catch(e) {
-//                                                 echo e.toString()
-//                                         } finally {
-//                                                 sh "cd ${env.WORKSPACE}/src/test/java/org/springframework/samples/petclinic/; java -jar ${env.WORKSPACE}/lib/junit-platform-console-standalone-1.8.2.jar -cp '.' --select-class PetclinicIntegrationTests --reports-dir='reports'"
-//                                         }
-//                                 }
-//                         }
-//                 }
                 stage('unit test'){
                         steps{
-                                sh 'chmod +x ./mvnw'
-                                sh 'mvn test'
-                        }
-                        post {
-                                always{
-                                        withChecks('Integration Tests'){
-                                                junit "target/surefire-reports/**/*.xml"
-                                                step( [ $class: 'JacocoPublisher' ] )
-                                                //junit skipPublishingChecks: true, testResults: "${env.WORKSPACE}/target/site/jacoco/index.html"
+                                script{
+                                        try{ 
+                                                sh "cd ${env.WORKSPACE}/lib/; wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.8.2/junit-platform-console-standalone-1.8.2.jar"
+                                                sh "jjavac -d target -cp target:lib/junit-platform-console-standalone-1.8.2.jar src/test/java/org/springframework/samples/petclinic/**/*.java"
+                                        } catch(e) {
+                                                echo e.toString()
+                                        } finally {
+                                                sh "java -jar lib/junit-platform-console-standalone-1.8.2.jar --class-path target --select-package org.springframework.samples.petclinic.** --reports-dir='reports'"
+                                                junit 'reports/*-jupiter.xml'
                                         }
                                 }
                         }
                 }
+//                 stage('unit test'){
+//                         steps{
+//                                 sh 'chmod +x ./mvnw'
+//                                 sh 'mvn test'
+//                         }
+//                         post {
+//                                 always{
+//                                         withChecks('Integration Tests'){
+//                                                 junit "target/surefire-reports/**/*.xml"
+//                                                 step( [ $class: 'JacocoPublisher' ] )
+//                                                 //junit skipPublishingChecks: true, testResults: "${env.WORKSPACE}/target/site/jacoco/index.html"
+//                                         }
+//                                 }
+//                         }
+//                 }
 	}
 }
