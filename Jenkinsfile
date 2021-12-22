@@ -64,7 +64,7 @@ pipeline {
                                                 echo e.toString()
                                         } finally {
                                                 sh "java -jar lib/junit-platform-console-standalone-1.8.2.jar --class-path target --select-package org.springframework.samples.petclinic.** --reports-dir='reports'"
-                                                junit 'reports/*-jupiter.xml'
+                                                junit 'reports/TEST-junit-jupiter.xml'
                                         }
                                 }
                         }
