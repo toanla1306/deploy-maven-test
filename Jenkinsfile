@@ -5,7 +5,7 @@ pipeline {
 	tools {
 		maven "Maven"
 	}
-// 	stages {
+	stages {
                 
 //                 stage('Load file groovy') {
 //                       steps {
