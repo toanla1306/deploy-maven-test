@@ -29,7 +29,7 @@ pipeline {
                                         sh "echo -e 'BUILD SUCCESS\nlink build - http://192.168.10.141:8080/job/simple-app/${env.BUILD_NUMBER}/console >> message.txt"
                                 }else{
                                         sh "echo Subject: ${check} - simple app - ${env.BUILD_NUMBER} > message.txt"
-                                        sh "cat report.txt | grep 'ERROR' | sed 's/:/ /g'|sed '$ a link build - http://192.168.10.141:8080/job/simple-app/${env.BUILD_NUMBER}/console >> message.txt"
+                                        sh "cat report.txt | grep 'ERROR' | sed 's/:/ /g'| sed '\$ a link build - http://192.168.10.141:8080/job/simple-app/${env.BUILD_NUMBER}/console >> message.txt"
                                 }
                                 sh "sudo ssmtp ldtoan1306@gmail.com < ./message.txt"  
                         }
