@@ -20,6 +20,7 @@ pipeline {
                                 step( [ $class: 'JacocoPublisher' ] )
                         }
                 }
+        }
                 post {
                         always {
                                         
@@ -90,5 +91,5 @@ pipeline {
 //                                 }
 //                         }
 //                 }
-	}
+// 	}
 }
