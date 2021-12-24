@@ -24,9 +24,8 @@ pipeline {
         post {
                 always {
                         steps {
-                                
-                                check = sh(script: "cat report.txt | grep BUILD | cut -d ' ' -f3", returnStdout: true).trim()
-                                if("${check}" == "SUCCESS"){
+                                check_status = sh(script: "cat report.txt | grep BUILD | cut -d ' ' -f3", returnStdout: true).trim()
+                                if("${check_status}" == "SUCCESS"){
                                         sh "echo Subject: ${check} - simple app - ${env.BUILD_NUMBER} > message.txt"
                                         sh "echo -e 'BUILD SUCCESS\nlink build - http://192.168.10.141:8080/job/simple-app/${env.BUILD_NUMBER}/console >> message.txt"
                                 }else{
