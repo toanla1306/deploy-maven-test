@@ -22,16 +22,19 @@ pipeline {
                 }
         }
         post {
-                always {     
-                        check = sh(script: "cat report.txt | grep BUILD | cut -d ' ' -f3", returnStdout: true).trim()
-                        if("${check}" == "SUCCESS"){
-                                sh "echo Subject: ${check} - simple app - ${env.BUILD_NUMBER} > message.txt"
-                                sh "echo -e 'BUILD SUCCESS\nlink build - http://192.168.10.141:8080/job/simple-app/${env.BUILD_NUMBER}/console >> message.txt"
-                        }else{
-                                sh "echo Subject: ${check} - simple app - ${env.BUILD_NUMBER} > message.txt"
-                                sh "cat report.txt | grep 'ERROR' | sed 's/:/ /g'| sed '\$ a link build - http://192.168.10.141:8080/job/simple-app/${env.BUILD_NUMBER}/console >> message.txt"
+                always {
+                        steps {
+                                
+                                check = sh(script: "cat report.txt | grep BUILD | cut -d ' ' -f3", returnStdout: true).trim()
+                                if("${check}" == "SUCCESS"){
+                                        sh "echo Subject: ${check} - simple app - ${env.BUILD_NUMBER} > message.txt"
+                                        sh "echo -e 'BUILD SUCCESS\nlink build - http://192.168.10.141:8080/job/simple-app/${env.BUILD_NUMBER}/console >> message.txt"
+                                }else{
+                                        sh "echo Subject: ${check} - simple app - ${env.BUILD_NUMBER} > message.txt"
+                                        sh "cat report.txt | grep 'ERROR' | sed 's/:/ /g'| sed '\$ a link build - http://192.168.10.141:8080/job/simple-app/${env.BUILD_NUMBER}/console >> message.txt"
+                                }
+                                sh "sudo ssmtp ldtoan1306@gmail.com < ./message.txt"  
                         }
-                        sh "sudo ssmtp ldtoan1306@gmail.com < ./message.txt"  
                 }
         }
 // 		stage('Deploy to Nexus'){
