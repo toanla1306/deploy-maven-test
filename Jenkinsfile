@@ -71,7 +71,7 @@ pipeline {
 //                 }
                 stage('unit test'){
                         steps{
-                                sh 'mvn test > report.txt'
+                                sh 'mvn test'
                                 step( [ $class: 'JacocoPublisher' ] )
                         }
 //                         post {
