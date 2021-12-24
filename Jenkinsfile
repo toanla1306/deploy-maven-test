@@ -23,7 +23,7 @@ pipeline {
         }
         post {
                 always {
-                        steps {
+                        script {
                                 check_status = sh(script: "cat report.txt | grep BUILD | cut -d ' ' -f3", returnStdout: true).trim()
                                 if("${check_status}" == "SUCCESS"){
                                         sh "echo Subject: ${check} - simple app - ${env.BUILD_NUMBER} > message.txt"
