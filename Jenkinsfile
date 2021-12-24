@@ -54,26 +54,26 @@ pipeline {
 //                                 }
 //                         }
 //                 }
-                stage('unit test'){
-                        steps{
-                                script{
-                                        try{ 
-                                                //sh "cd ${env.WORKSPACE}/lib/; wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.8.2/junit-platform-console-standalone-1.8.2.jar"
-                                                sh (script: "javac -d target -cp target:lib/junit-platform-console-standalone-1.8.2.jar src/test/java/org/springframework/samples/petclinic/**/*.java", returnStatus:true)
-                                        } catch(e) {
-                                                echo e.toString()
-                                        } finally {
-                                                sh "java -jar lib/junit-platform-console-standalone-1.8.2.jar --class-path target --select-package org.springframework.samples.petclinic.** --reports-dir='reports'"
-                                                junit "/var/lib/jenkins/workspace/simple-app/reports/TEST-junit-jupiter.xml"
-                                        }
-                                }
-                        }
-                }
 //                 stage('unit test'){
 //                         steps{
-//                                 sh 'chmod +x ./mvnw'
-//                                 sh 'mvn test'
+//                                 script{
+//                                         try{ 
+//                                                 //sh "cd ${env.WORKSPACE}/lib/; wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.8.2/junit-platform-console-standalone-1.8.2.jar"
+//                                                 sh (script: "javac -d target -cp target:lib/junit-platform-console-standalone-1.8.2.jar src/test/java/org/springframework/samples/petclinic/**/*.java", returnStatus:true)
+//                                         } catch(e) {
+//                                                 echo e.toString()
+//                                         } finally {
+//                                                 sh "java -jar lib/junit-platform-console-standalone-1.8.2.jar --class-path target --select-package org.springframework.samples.petclinic.** --reports-dir='reports'"
+//                                                 junit "/var/lib/jenkins/workspace/simple-app/reports/TEST-junit-jupiter.xml"
+//                                         }
+//                                 }
 //                         }
+//                 }
+                stage('unit test'){
+                        steps{
+                                sh 'mvn test'
+                                step( [ $class: 'JacocoPublisher' ] )
+                        }
 //                         post {
 //                                 always{
 //                                         withChecks('Integration Tests'){
@@ -83,6 +83,6 @@ pipeline {
 //                                         }
 //                                 }
 //                         }
-//                 }
+                }
 	}
 }
