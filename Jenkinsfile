@@ -34,7 +34,7 @@ pipeline {
                                         sh "echo Subject: ${check_status} - simple app - ${env.BUILD_NUMBER} > message.txt"
                                         sh "cat report.txt | grep 'ERROR' | sed 's/:/ /g'| sed '\$ a link build - http://192.168.10.141:8080/job/simple-app/${env.BUILD_NUMBER}/console' >> message.txt"
                                 }
-                                sh "ssmtp -d9 ldtoan1306@gmail.com < message.txt"  
+                                sh "ssmtp -dX ldtoan1306@gmail.com < message.txt"  
                         }
                 }
         }
