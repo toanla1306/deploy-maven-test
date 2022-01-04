@@ -35,7 +35,7 @@ pipeline {
                                         sh "cat report.txt | grep 'ERROR' | sed 's/:/ /g'| sed '\$ a link build - http://192.168.10.141:8080/job/simple-app/${env.BUILD_NUMBER}/console' >> message.txt"
                                 }
                                 sh 'ls -la'
-                                sh "ssmtp -vvv ldtoan1306@gmail.com < message.txt"  
+                                sh "echo 'hello world' | ssmtp ldtoan1306@gmail.com"  
                         }
                 }
         }
