@@ -58,10 +58,12 @@ pipeline {
 		}
 
 		stage('Check health release') {
-			script{
-				tag_image_docker = groovy_file.getTagsImageDocker()
-				groovy_file.loginDockerwithNexus('JenkinsVM')
-				groovy_file.checkHealthDeploy()
+			steps{
+				script{
+					tag_image_docker = groovy_file.getTagsImageDocker()
+					groovy_file.loginDockerwithNexus('JenkinsVM')
+					groovy_file.checkHealthDeploy()
+				}
 			}
 		}
 	}
