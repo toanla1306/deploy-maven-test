@@ -45,19 +45,19 @@ pipeline {
 // 			}
 // 		}
 
-		stage('Build docker image') {
-			steps {
-				script {
-                                        sh "sudo chmod 666 /var/run/docker.sock"
-					tag_image_docker = groovy_file.getTagsImageDocker()
-					groovy_file.loginDockerwithNexus('JenkinsVM')
-                                        echo "${env.WORKSPACE}"
-					sh "docker build ${env.WORKSPACE} -t nexus-repository.com:8085/petclinic-image:${tag_image_docker}"
-					sh "docker push nexus-repository.com:8085/petclinic-image:${tag_image_docker}"
+// 		stage('Build docker image') {
+// 			steps {
+// 				script {
+//                                         sh "sudo chmod 666 /var/run/docker.sock"
+// 					tag_image_docker = groovy_file.getTagsImageDocker()
+// 					groovy_file.loginDockerwithNexus('JenkinsVM')
+//                                         echo "${env.WORKSPACE}"
+// 					sh "docker build ${env.WORKSPACE} -t nexus-repository.com:8085/petclinic-image:${tag_image_docker}"
+// 					sh "docker push nexus-repository.com:8085/petclinic-image:${tag_image_docker}"
 
-				}
-			}
-		}
+// 				}
+// 			}
+// 		}
 
 		stage('Check health release') {
 			steps{
