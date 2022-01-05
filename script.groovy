@@ -41,8 +41,8 @@ def loginDockerwithNexus(vm) {
 def checkHealthDeploy() {
         sshReleaseVM("docker pull nexus-repository.com:8085/petclinic-image:${tag_image_docker}")
         check_list_container_null = sshReleaseVM("docker ps -a | wc -l", true).trim()
-        if("${check_list_container_null}" == "3") {
-                id_container_old = sshReleaseVM("docker ps -a | head -2 | cut -d ' ' -f1", true).trim()
+        if("${check_list_container_null}" == "2") {
+                id_container_old = sshReleaseVM("docker ps -a | tail -1 | cut -d ' ' -f1", true).trim()
                 sshReleaseVM("docker stop ${id_container_old}")
         }
         sshReleaseVM("docker run --name check-health-${id_container_old} -d -p 8085:8080 nexus-repository.com:8085/petclinic-image:${tag_image_docker}")
