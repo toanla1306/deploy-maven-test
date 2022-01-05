@@ -21,7 +21,7 @@ def getTagsImageDocker() {
         return "${now}-${version_app}-${version_build_in_day}"
 }
 
-def sshReleaseVM(commandline, value_return_stdout=false, credentials_id='vmrelease'){
+def sshReleaseVM(commandline, value_return_stdout=false, credentials_id='releasevm1'){
         withCredentials([usernamePassword(credentialsId: credentials_id, passwordVariable: 'password', usernameVariable: 'username')]) {
                 sh(script: "sshpass -p ${password} ssh -o stricthostkeychecking=no ${username}@release-vm.com ${commandline}", returnStdout: value_return_stdout)
         }
