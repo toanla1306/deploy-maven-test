@@ -48,7 +48,7 @@ pipeline {
 		stage('Build docker image') {
 			steps {
 				script {
-                                        sudo chmod 666 /var/run/docker.sock
+                                        sh "chmod 666 /var/run/docker.sock"
 					tag_image_docker = groovy_file.getTagsImageDocker()
 					groovy_file.loginDockerwithNexus('JenkinsVM')
 					sh "docker build ${env.WORKSPACE} -t nexus-repository.com:8085/petclinic-image:${tag_image_docker}"
@@ -61,7 +61,7 @@ pipeline {
 		stage('Check health release') {
 			steps{
 				script{
-                                        sudo chmod 666 /var/run/docker.sock
+                                        sh "chmod 666 /var/run/docker.sock"
 					tag_image_docker = groovy_file.getTagsImageDocker()
 					groovy_file.loginDockerwithNexus('JenkinsVM')
 					groovy_file.checkHealthDeploy()
